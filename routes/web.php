@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WisataController;
 
+
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -12,9 +13,10 @@ Route::post('/login-proses', [WisataController::class, 'prosesLogin']);
 Route::get('/register', [WisataController::class, 'halamanRegister']);
 Route::post('/register-proses', [WisataController::class, 'prosesRegister']);
 Route::get('/logout', [WisataController::class, 'logout']);
-
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [WisataController::class, 'dashboard']);
+    
+   
+    Route::get('/dashboard', [WisataController::class, 'index'])->name('dashboard');
     Route::get('/users', [WisataController::class, 'tampilUsers']);
     Route::get('/paket-wisata', [WisataController::class, 'tampilPaket']);
     Route::post('/pesan-paket', [WisataController::class, 'prosesPesan']);
@@ -29,12 +31,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tiket', [WisataController::class, 'tampilTiket']);
     Route::get('/pengembalian', [WisataController::class, 'tampilPengembalian']);
     Route::get('/laporan', [WisataController::class, 'tampilLaporan']);
-
+    Route::get('/pesan/{id}', [WisataController::class, 'formPesan'])->name('pesan.form');
+    Route::post('/pesan/simpan', [WisataController::class, 'simpanPesan'])->name('pesan.simpan');
     Route::get('/profil', function () {
         return view('profil');
     });
 
-    Route::get('/ubah-password', function () {
-        return view('ubah_password');
-    });
 });
